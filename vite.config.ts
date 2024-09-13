@@ -1,5 +1,28 @@
 import { defineConfig } from 'vite'
-import { visualizer } from "rollup-plugin-visualizer";
+// vite-plugin-example.js
+
+function RemoveLibPlugin() {
+  return {
+    name: 'inject-removelib-plugin',
+    apply: 'build',
+    generateBundle(options, bundle) {
+      const fileSizes = {};
+
+      for (const [fileName, output] of Object.entries<any>(bundle)) {
+        if (output.type === "chunk") {
+          output.code = `window.removeBabelVuePluginAssert = function(){};window.removeBabelPluginResolveType = function(){};${output.code}`
+        }
+      }
+
+      console.table(fileSizes);
+
+    }
+    // renderChunk(code) {
+    //   console.log(code)
+    // }
+  };
+}
+
 
 export default defineConfig({
   define: {
@@ -8,16 +31,8 @@ export default defineConfig({
     }
   },
   plugins: [
-    // visualizer(
-    //   {
-    //     // emitFile: true,
-    //     // filename: "stats.html",
-    //     open: true,  // 打包后自动打开页面
-    //     gzipSize: true,  // 查看 gzip 压缩大小
-    //     brotliSize: true // 查看 brotli 压缩大小
-    //   }
-    // )
-
+    // @ts-expect-error
+    RemoveLibPlugin()
   ],
   build: {
     lib: {
@@ -27,8 +42,8 @@ export default defineConfig({
     },
     rollupOptions: {
       external: [
-        '@babel/types', 
-        '@babel/template', 
+        '@babel/types',
+        '@babel/template',
         '@vue/babel-plugin-resolve-type',
         "assert"
 
@@ -44,7 +59,7 @@ export default defineConfig({
           '@babel/template': 'Babel.packages.template',
           // '@babel/plugin-syntax-jsx': "Babel.availablePlugins['syntax-jsx']",
           "@vue/babel-plugin-resolve-type": "removeBabelPluginResolveType",
-          "assert": "removeAssert"
+          "assert": "removeBabelVuePluginAssert"
           // '@babel/types': 'Babel.packages.types',
         },
       },
