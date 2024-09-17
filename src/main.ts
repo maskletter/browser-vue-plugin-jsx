@@ -1,41 +1,48 @@
 import './style.css'
 import typescriptLogo from './typescript.svg'
-import { plugin } from '../lib/main'
+import { transform, transformJsx } from '../lib/main'
 
 // @ts-expect-error
 const babel = window.Babel
 
+function testJsx() {
 
-const code = `
-    import Vue from 'vue'
-    import React from 'react'
-    import Vue3, { ref } from 'vue'
-    import * as Vue2 from 'vue'
-    import './c.css'
-    class Sc {
-        load!: string;
-    }
-    export const name = (a: string) => {
-        return Vue;
-    }
-    export const a2 = a?.f?.c
-    const He = () => {
-        const v = ref(1)
-        return <div v-model={v}>aa</div>
-    }
+  const c = transformJsx(`
+    const name: string = "adw";
+    const a = <h1>a</h1>
+  `)
+
+  console.log(c);
+  
+}
+
+function testTransform() {
+
+  const code = `
+<template>
+    <h1 kf="ddd">aaas</h1>
+    <div> class="ad"> {{ n }}  c</div>
+</template>    
+<script setup lang="jsx">
+const a = 'awd'
+console.log(<h1>aaa</h1>)
+</script>
+<style scoped lang="scss">
+h1,.ad {
+background: red;
+:deep(.ad) {
+    color: v-bind(n);
+}
+}
+</style>
 `
 
+console.log(transform(code, 'app.vue', { htmlFormat: false }))
 
-console.log(babel.transform(code, {
-  plugins: [
-    plugin(),
-  ],
-  presets: ['typescript', ["env", {
-      modules: false,
-      "targets": "> 10%, not dead",
-  }]], 
-  filename: 'index.tsx',
-}).code);
+}
+
+testTransform();
+testJsx();
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
@@ -54,5 +61,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </p>
   </div>
 `
-
+export const getN = () => {
+  
+}
 // setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
