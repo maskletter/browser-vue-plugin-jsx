@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.25.6/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@codeweb/compiler-sfc/dist/main.umd.js"></script>
+    <script type="module" >
+        import postcss from 'https://cdn.jsdelivr.net/npm/@codeweb/postcss/+esm'
+        import cssModule from 'https://cdn.jsdelivr.net/npm/@codeweb/postcss/dist/cssModule/+esm'
+        
+        postcss([cssModule({ getJSON(){} })]).process(`
+        .aa {
+            color: red
+        }
+            .blue {
+            color:yellow}
+        `).then(r => {
+            console.log(r.css);
+            console.log(r.messages[0].exportTokens);
+
+            // console.log(r.messages[0].exportTokens);
+        })
+
+        
+        
+    </script>
+</body>
+</html>

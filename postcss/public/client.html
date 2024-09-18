@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Hello, world</h1>
+    <!-- <script type="module" src=""></script> -->
+    <script type="module">
+        import postcss from '../dist/index.js'
+        import cssModule from '../dist/cssModule.js'
+
+        postcss([cssModule({ getJSON(){} })]).process(`
+        .aa {
+            color: red
+        }
+            .blue {
+            color:yellow}
+        `).then(r => {
+            console.log(r.css);
+            console.log(r.messages[0].exportTokens);
+
+            // console.log(r.messages[0].exportTokens);
+        })
+
+    </script>
+</body>
+
+</html>

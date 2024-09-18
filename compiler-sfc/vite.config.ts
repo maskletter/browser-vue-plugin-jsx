@@ -47,7 +47,7 @@ export default defineConfig(config => {
       lib: {
         entry: './lib/main.ts',
         name: 'BabelVueJsx',
-        fileName: 'main'
+        fileName: 'main',
       },
       rollupOptions: {
         external: [
